@@ -10,11 +10,18 @@ import SwiftUI
 struct OperationListView: View {
     
     var operations: [Operation] = MockData().mockOperations
+    @State var isShowingAlert = false
     
     var body: some View {
         NavigationView {
             List(operations) { operation in
-                OperationListViewCell(operation: operation)
+                Button (action: {
+                    isShowingAlert = true
+                }, label: {
+                    OperationListViewCell(operation: operation)
+                }).alert(isPresented: $isShowingAlert, content: {
+                    Alert(title: Text("Alert"), message: Text("This is a message"))
+                })
             }
             .navigationTitle("Operation List")
         }
