@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -217,6 +217,9 @@
 				Base,
 			);
 			mainGroup = 26E69D6626E5C56900B9C7B3;
+			packageReferences = (
+				26E69D9D26E5C69600B9C7B3 /* XCRemoteSwiftPackageReference "BuildConfig" */,
+			);
 			productRefGroup = 26E69D7026E5C56A00B9C7B3 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -580,6 +583,17 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		26E69D9D26E5C69600B9C7B3 /* XCRemoteSwiftPackageReference "BuildConfig" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/417-72KI/BuildConfig.swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
 	};
 	rootObject = 26E69D6726E5C56900B9C7B3 /* Project object */;
 }
