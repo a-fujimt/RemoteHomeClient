@@ -18,6 +18,6 @@ struct ApplianceListViewCell: View {
 
 struct ApplianceListViewCell_Previews: PreviewProvider {
     static var previews: some View {
-        ApplianceListViewCell(appliance: Appliance(id: "id", name: "name", operations: []))
+        ApplianceListViewCell(appliance: Appliance(id: "id", name: "name"))
     }
 }

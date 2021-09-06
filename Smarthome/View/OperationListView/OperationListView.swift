@@ -9,6 +9,7 @@ import SwiftUI
 
 struct OperationListView: View {
     
+    var appliance: Appliance
     var operations: [Operation] = MockData().mockOperations
     @State var isShowingAlert = false
     
@@ -30,6 +31,6 @@ struct OperationListView: View {
 
 struct OperationListView_Previews: PreviewProvider {
     static var previews: some View {
-        OperationListView()
+        OperationListView(appliance: MockData().mockAppliances[0])
     }
 }

@@ -10,5 +10,4 @@ import Foundation
 struct Appliance: Decodable, Identifiable {
     var id: String
     var name: String
-    var operations: [Operation]
 }

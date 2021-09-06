@@ -14,7 +14,7 @@ struct ApplianceListView: View {
     var body: some View {
         NavigationView {
             List(appliances) { appliance in
-                NavigationLink(destination: OperationListView(operations: appliance.operations)) {
+                NavigationLink(destination: OperationListView(appliance: appliance)) {
                     ApplianceListViewCell(appliance: appliance)
                 }
             }

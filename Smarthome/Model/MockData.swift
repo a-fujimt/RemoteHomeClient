@@ -16,11 +16,9 @@ struct MockData {
         mockOperations = [Operation(id: "on", name: "ON"),
                           Operation(id: "off", name: "OFF")]
         mockAppliances = [Appliance(id: "tv",
-                                    name: "TV",
-                                    operations: mockOperations),
+                                    name: "TV"),
                           Appliance(id: "light",
-                                    name: "Light",
-                                    operations: mockOperations)
+                                    name: "Light")
                           ]
     }
     
