@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -21,6 +21,7 @@
 		26F6BBDC26E5D8C4007C2B49 /* ApplianceListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F6BBDB26E5D8C4007C2B49 /* ApplianceListViewCell.swift */; };
 		26F6BBDF26E5DBB8007C2B49 /* OperationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F6BBDE26E5DBB8007C2B49 /* OperationListView.swift */; };
 		26F6BBE126E5DBF8007C2B49 /* OperationListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F6BBE026E5DBF8007C2B49 /* OperationListViewCell.swift */; };
+		26F6BBE426E5E2E8007C2B49 /* DataFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F6BBE326E5E2E8007C2B49 /* DataFetcher.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,7 @@
 		26F6BBDB26E5D8C4007C2B49 /* ApplianceListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplianceListViewCell.swift; sourceTree = "<group>"; };
 		26F6BBDE26E5DBB8007C2B49 /* OperationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationListView.swift; sourceTree = "<group>"; };
 		26F6BBE026E5DBF8007C2B49 /* OperationListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationListViewCell.swift; sourceTree = "<group>"; };
+		26F6BBE326E5E2E8007C2B49 /* DataFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFetcher.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +97,7 @@
 				26E69D8326E5C56B00B9C7B3 /* SmarthomeTests */,
 				26E69D8E26E5C56B00B9C7B3 /* SmarthomeUITests */,
 				26E69D7026E5C56A00B9C7B3 /* Products */,
+				26F6BBEC26E5E911007C2B49 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -118,6 +121,7 @@
 				26E69D7626E5C56B00B9C7B3 /* Assets.xcassets */,
 				26E69D7B26E5C56B00B9C7B3 /* Info.plist */,
 				26E69D7826E5C56B00B9C7B3 /* Preview Content */,
+				26F6BBE326E5E2E8007C2B49 /* DataFetcher.swift */,
 			);
 			path = Smarthome;
 			sourceTree = "<group>";
@@ -186,6 +190,13 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		26F6BBEC26E5E911007C2B49 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -202,6 +213,8 @@
 			dependencies = (
 			);
 			name = Smarthome;
+			packageProductDependencies = (
+			);
 			productName = Smarthome;
 			productReference = 26E69D6F26E5C56A00B9C7B3 /* Smarthome.app */;
 			productType = "com.apple.product-type.application";
@@ -274,7 +287,6 @@
 			);
 			mainGroup = 26E69D6626E5C56900B9C7B3;
 			packageReferences = (
-				26E69D9D26E5C69600B9C7B3 /* XCRemoteSwiftPackageReference "BuildConfig" */,
 			);
 			productRefGroup = 26E69D7026E5C56A00B9C7B3 /* Products */;
 			projectDirPath = "";
@@ -319,6 +331,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				26E69D7526E5C56A00B9C7B3 /* ContentView.swift in Sources */,
+				26F6BBE426E5E2E8007C2B49 /* DataFetcher.swift in Sources */,
 				26E69DA526E5CEBC00B9C7B3 /* MockData.swift in Sources */,
 				26E69D9F26E5CAC400B9C7B3 /* ApplianceList.swift in Sources */,
 				26F6BBDC26E5D8C4007C2B49 /* ApplianceListViewCell.swift in Sources */,
@@ -647,17 +660,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		26E69D9D26E5C69600B9C7B3 /* XCRemoteSwiftPackageReference "BuildConfig" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/417-72KI/BuildConfig.swift";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 3.0.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
 	};
 	rootObject = 26E69D6726E5C56900B9C7B3 /* Project object */;
 }
