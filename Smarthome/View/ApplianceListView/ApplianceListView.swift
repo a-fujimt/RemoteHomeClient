@@ -9,16 +9,20 @@ import SwiftUI
 
 struct ApplianceListView: View {
     
-    let appliances: [Appliance] = MockData().mockAppliances
+//    let appliances: [Appliance] = MockData().mockAppliances
+    @ObservedObject var fetcher = DataFetcher()
     
     var body: some View {
         NavigationView {
-            List(appliances) { appliance in
-                NavigationLink(destination: OperationListView(appliance: appliance)) {
+            List(fetcher.appliances) { appliance in
+                NavigationLink(destination: OperationListView(appliance: appliance, fetcher: fetcher)) {
                     ApplianceListViewCell(appliance: appliance)
                 }
             }
             .navigationTitle("Appliance List")
+        }
+        .onAppear() {
+            fetcher.fetchApplianceList()
         }
     }
 }
