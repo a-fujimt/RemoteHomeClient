@@ -28,12 +28,18 @@ class ApplianceListFetcher: ObservableObject {
             print(data)
             let decoder: JSONDecoder = JSONDecoder()
             do {
-                let searchedResultData = try decoder.decode([Appliance].self, from: data)
+                let applianceListData = try decoder.decode([Appliance].self, from: data)
                 DispatchQueue.main.async {
-                    self.appliances = searchedResultData.reversed()
+                    self.appliances = applianceListData.reversed()
                 }
             } catch {
                 print("json convert failed in JSONDecoder. " + error.localizedDescription)
+                do {
+                    let apiErrorData = try decoder.decode(ApiError.self, from: data)
+                    print(apiErrorData.error.message)
+                } catch {
+                    print("json convert failed in JSONDecoder. " + error.localizedDescription)
+                }
             }
         }.resume()
     }

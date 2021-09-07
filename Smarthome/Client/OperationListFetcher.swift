@@ -26,12 +26,18 @@ class OperationListFetcher: ObservableObject {
             guard let data = data else { return }
             let decoder: JSONDecoder = JSONDecoder()
             do {
-                let searchedResultData = try decoder.decode([Operation].self, from: data)
+                let operationListData = try decoder.decode([Operation].self, from: data)
                 DispatchQueue.main.async {
-                    self.operations = searchedResultData.reversed()
+                    self.operations = operationListData.reversed()
                 }
             } catch {
                 print("json convert failed in JSONDecoder. " + error.localizedDescription)
+                do {
+                    let apiErrorData = try decoder.decode(ApiError.self, from: data)
+                    print(apiErrorData.error.message)
+                } catch {
+                    print("json convert failed in JSONDecoder. " + error.localizedDescription)
+                }
             }
         }.resume()
     }

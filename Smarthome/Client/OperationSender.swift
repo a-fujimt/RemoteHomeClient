@@ -42,14 +42,16 @@ class OperationSender: ObservableObject {
                 completion(value)
                 return
             }
+            let decoder: JSONDecoder = JSONDecoder()
             do {
-                let errorData = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments) as! [String: Any]
-                let errorDetail = errorData["error"] as! [String: Any]
-                let errorMessage = errorDetail["message"] as! String
+                let apiErrorData = try decoder.decode(ApiError.self, from: data)
+                let errorMessage = apiErrorData.error.message
+                print(apiErrorData.error.message)
                 if let response = response as? HTTPURLResponse {
                     completion(errorMessage + "(" + String(response.statusCode) + ")")
                 }
             } catch {
+                print("json convert failed in JSONDecoder. " + error.localizedDescription)
                 completion(value)
             }
         }.resume()
