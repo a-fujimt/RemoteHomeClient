@@ -31,7 +31,7 @@ class OperationListFetcher: ObservableObject {
             } catch {
                 print("json convert failed in JSONDecoder. " + error.localizedDescription)
                 do {
-                    let apiErrorData = try decoder.decode(ApiError.self, from: data)
+                    let apiErrorData = try decoder.decode(ApiErrorModel.self, from: data)
                     print(apiErrorData.error.message)
                 } catch {
                     print("json convert failed in JSONDecoder. " + error.localizedDescription)

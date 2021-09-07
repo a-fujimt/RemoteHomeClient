@@ -21,7 +21,7 @@ class OperationSender: ObservableObject {
         passPhrase = apiProperty.getString("passphrase") ?? ""
     }
     
-    func postOperation(appliance: String, operation: String, completion: @escaping(String) -> Void) {
+    func postOperation(appliance: String, operation: String, completion: @escaping (Result<String, Error>) -> Void) {
         let urlString = url + "/api/v1/" + appliance + "/" + operation
         var request = URLRequest(url: URL(string: urlString)!)
         let jsonBody = ["passphrase" : passPhrase]
@@ -39,20 +39,20 @@ class OperationSender: ObservableObject {
             guard let data = data else { return }
             let value = String(data: data, encoding: .utf8)!
             if value == "OK" {
-                completion(value)
+                completion(.success(value))
                 return
             }
             let decoder: JSONDecoder = JSONDecoder()
             do {
-                let apiErrorData = try decoder.decode(ApiError.self, from: data)
+                let apiErrorData = try decoder.decode(ApiErrorModel.self, from: data)
                 let errorMessage = apiErrorData.error.message
                 print(apiErrorData.error.message)
                 if let response = response as? HTTPURLResponse {
-                    completion(errorMessage + "(" + String(response.statusCode) + ")")
+                    completion(.failure(ApiError.server(response.statusCode, errorMessage)))
                 }
             } catch {
                 print("json convert failed in JSONDecoder. " + error.localizedDescription)
-                completion(value)
+                completion(.failure(ApiError.decoder(error)))
             }
         }.resume()
     }

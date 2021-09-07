@@ -12,22 +12,22 @@ struct OperationListView: View {
 //    var operations: [Operation] = MockData().mockOperations
     @ObservedObject var operationListViewModel: OperationListViewModel
     @State var isShowingAlert = false
-    @State var alertTitle = ""
-    @State var alertMessage = ""
+    @State var alert = Alert(title: Text(""))
     
     var body: some View {
         List(operationListViewModel.operations) { operation in
             Button (action: {
-                alertTitle = operation.name
-                operationListViewModel.send(operation: operation.id) { result in
+                operationListViewModel.send(operation: operation.id) { (title, message) in
                     self.isShowingAlert = true
-                    alertMessage = result
+                    if message == "" {
+                        alert = Alert(title: Text(title))
+                    } else {
+                        alert = Alert(title: Text(title), message: Text(message))
+                    }
                 }
             }, label: {
                 OperationListViewCell(operation: operation)
-            }).alert(isPresented: $isShowingAlert) {
-                Alert(title: Text(alertTitle), message: Text(alertMessage))
-            }
+            }).alert(isPresented: $isShowingAlert, content: { alert })
         }
         .navigationTitle("Operation List")
         .onAppear() {

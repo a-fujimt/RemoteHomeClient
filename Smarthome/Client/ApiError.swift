@@ -7,10 +7,9 @@
 
 import Foundation
 
-struct ApiError: Decodable {
-    var error: ApiErrorMessage
-}
-
-struct ApiErrorMessage: Decodable {
-    var message: String
+enum ApiError: Error {
+    case server(Int, String)
+    case decoder(Error)
+    case noResponse
+    case unknown(Error)
 }
