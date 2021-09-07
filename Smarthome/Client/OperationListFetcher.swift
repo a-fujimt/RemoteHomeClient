@@ -13,14 +13,12 @@ class OperationListFetcher: ObservableObject {
     private let url: String
     private let passPhrase: String
     
-    @Published var operations: [Operation] = []
-    
     init() {
         url = apiProperty.getString("URL") ?? "https://localhost"
         passPhrase = apiProperty.getString("passphrase") ?? ""
     }
     
-    func fetchOperationList(appliance: String) {
+    func fetchOperationList(appliance: String, completion: @escaping ([Operation]) -> Void) {
         let urlString = url + "/api/v1/" + appliance
         URLSession.shared.dataTask(with: URL(string: urlString)!) { (data, response, error) in
             guard let data = data else { return }
@@ -28,7 +26,7 @@ class OperationListFetcher: ObservableObject {
             do {
                 let operationListData = try decoder.decode([Operation].self, from: data)
                 DispatchQueue.main.async {
-                    self.operations = operationListData.reversed()
+                    completion(operationListData)
                 }
             } catch {
                 print("json convert failed in JSONDecoder. " + error.localizedDescription)

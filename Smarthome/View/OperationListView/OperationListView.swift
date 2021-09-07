@@ -9,22 +9,21 @@ import SwiftUI
 
 struct OperationListView: View {
     
-    var appliance: Appliance
 //    var operations: [Operation] = MockData().mockOperations
-    @ObservedObject var fetcher = OperationListFetcher()
+    @ObservedObject var operationListViewModel: OperationListViewModel
     @State var isShowingAlert = false
-    @State var alertMessage = ""
     @State var alertTitle = ""
+    @State var alertMessage = ""
     
     var body: some View {
         NavigationView {
-            List(fetcher.operations) { operation in
+            List(operationListViewModel.operations) { operation in
                 Button (action: {
                     alertTitle = operation.name
-                    OperationSender().postOperation(appliance: appliance.id, operation: operation.id, completion: { result in
-                        isShowingAlert = true
+                    operationListViewModel.send(operation: operation.id) { result in
+                        self.isShowingAlert = true
                         alertMessage = result
-                    })
+                    }
                 }, label: {
                     OperationListViewCell(operation: operation)
                 }).alert(isPresented: $isShowingAlert) {
@@ -34,7 +33,7 @@ struct OperationListView: View {
             .navigationTitle("Operation List")
         }
         .onAppear() {
-            fetcher.fetchOperationList(appliance: appliance.id)
+            operationListViewModel.fetch()
         }
     }
     
@@ -42,6 +41,6 @@ struct OperationListView: View {
 
 struct OperationListView_Previews: PreviewProvider {
     static var previews: some View {
-        OperationListView(appliance: MockData().mockAppliances[0])
+        OperationListView(operationListViewModel: OperationListViewModel(appliance: MockData().mockAppliances[0]))
     }
 }

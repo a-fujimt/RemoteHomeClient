@@ -13,14 +13,12 @@ class ApplianceListFetcher: ObservableObject {
     private let url: String
     private let passPhrase: String
     
-    @Published var appliances: [Appliance] = []
-    
     init() {
         url = apiProperty.getString("URL") ?? "https://localhost"
         passPhrase = apiProperty.getString("passphrase") ?? ""
     }
     
-    func fetchApplianceList() {
+    func fetchApplianceList(completion: @escaping ([Appliance]) -> Void) {
         let urlString = url + "/api/v1/list"
         print(urlString)
         URLSession.shared.dataTask(with: URL(string: urlString)!) { (data, response, error) in
@@ -30,7 +28,7 @@ class ApplianceListFetcher: ObservableObject {
             do {
                 let applianceListData = try decoder.decode([Appliance].self, from: data)
                 DispatchQueue.main.async {
-                    self.appliances = applianceListData.reversed()
+                    completion(applianceListData)
                 }
             } catch {
                 print("json convert failed in JSONDecoder. " + error.localizedDescription)
