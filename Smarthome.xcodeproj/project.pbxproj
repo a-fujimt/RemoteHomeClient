@@ -21,10 +21,13 @@
 		26F6BBDC26E5D8C4007C2B49 /* ApplianceListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F6BBDB26E5D8C4007C2B49 /* ApplianceListViewCell.swift */; };
 		26F6BBDF26E5DBB8007C2B49 /* OperationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F6BBDE26E5DBB8007C2B49 /* OperationListView.swift */; };
 		26F6BBE126E5DBF8007C2B49 /* OperationListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F6BBE026E5DBF8007C2B49 /* OperationListViewCell.swift */; };
-		26F6BBE426E5E2E8007C2B49 /* DataFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F6BBE326E5E2E8007C2B49 /* DataFetcher.swift */; };
+		26F6BBE426E5E2E8007C2B49 /* ApplianceListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F6BBE326E5E2E8007C2B49 /* ApplianceListFetcher.swift */; };
 		26F6BBF826E5EFCD007C2B49 /* API.plist in Resources */ = {isa = PBXBuildFile; fileRef = 26F6BBF726E5EFCD007C2B49 /* API.plist */; };
 		26F6BBFA26E5F0F0007C2B49 /* ApiProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F6BBF926E5F0F0007C2B49 /* ApiProperty.swift */; };
 		26F6BBFC26E5F586007C2B49 /* OperationList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F6BBFB26E5F586007C2B49 /* OperationList.swift */; };
+		26F6BBFE26E606BB007C2B49 /* OperationListFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F6BBFD26E606BB007C2B49 /* OperationListFetcher.swift */; };
+		26F6BC0026E60861007C2B49 /* OperationSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F6BBFF26E60861007C2B49 /* OperationSender.swift */; };
+		26F6BC0326E74894007C2B49 /* ApiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F6BC0226E74894007C2B49 /* ApiError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,10 +68,13 @@
 		26F6BBDB26E5D8C4007C2B49 /* ApplianceListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplianceListViewCell.swift; sourceTree = "<group>"; };
 		26F6BBDE26E5DBB8007C2B49 /* OperationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationListView.swift; sourceTree = "<group>"; };
 		26F6BBE026E5DBF8007C2B49 /* OperationListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationListViewCell.swift; sourceTree = "<group>"; };
-		26F6BBE326E5E2E8007C2B49 /* DataFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFetcher.swift; sourceTree = "<group>"; };
+		26F6BBE326E5E2E8007C2B49 /* ApplianceListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplianceListFetcher.swift; sourceTree = "<group>"; };
 		26F6BBF726E5EFCD007C2B49 /* API.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = API.plist; sourceTree = "<group>"; };
 		26F6BBF926E5F0F0007C2B49 /* ApiProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiProperty.swift; sourceTree = "<group>"; };
 		26F6BBFB26E5F586007C2B49 /* OperationList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationList.swift; sourceTree = "<group>"; };
+		26F6BBFD26E606BB007C2B49 /* OperationListFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationListFetcher.swift; sourceTree = "<group>"; };
+		26F6BBFF26E60861007C2B49 /* OperationSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OperationSender.swift; path = Smarthome/Client/OperationSender.swift; sourceTree = SOURCE_ROOT; };
+		26F6BC0226E74894007C2B49 /* ApiError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,7 +133,7 @@
 				26E69D7626E5C56B00B9C7B3 /* Assets.xcassets */,
 				26E69D7B26E5C56B00B9C7B3 /* Info.plist */,
 				26E69D7826E5C56B00B9C7B3 /* Preview Content */,
-				26F6BBE326E5E2E8007C2B49 /* DataFetcher.swift */,
+				26F6BC0126E74751007C2B49 /* Client */,
 				26F6BBF926E5F0F0007C2B49 /* ApiProperty.swift */,
 				26F6BBF726E5EFCD007C2B49 /* API.plist */,
 			);
@@ -204,6 +210,17 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		26F6BC0126E74751007C2B49 /* Client */ = {
+			isa = PBXGroup;
+			children = (
+				26F6BBE326E5E2E8007C2B49 /* ApplianceListFetcher.swift */,
+				26F6BBFD26E606BB007C2B49 /* OperationListFetcher.swift */,
+				26F6BBFF26E60861007C2B49 /* OperationSender.swift */,
+				26F6BC0226E74894007C2B49 /* ApiError.swift */,
+			);
+			path = Client;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -340,14 +357,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				26F6BC0326E74894007C2B49 /* ApiError.swift in Sources */,
 				26E69D7526E5C56A00B9C7B3 /* ContentView.swift in Sources */,
-				26F6BBE426E5E2E8007C2B49 /* DataFetcher.swift in Sources */,
+				26F6BBE426E5E2E8007C2B49 /* ApplianceListFetcher.swift in Sources */,
 				26E69DA526E5CEBC00B9C7B3 /* MockData.swift in Sources */,
 				26E69D9F26E5CAC400B9C7B3 /* ApplianceList.swift in Sources */,
 				26F6BBDC26E5D8C4007C2B49 /* ApplianceListViewCell.swift in Sources */,
 				26F6BBE126E5DBF8007C2B49 /* OperationListViewCell.swift in Sources */,
 				26E69D7326E5C56A00B9C7B3 /* SmarthomeApp.swift in Sources */,
+				26F6BBFE26E606BB007C2B49 /* OperationListFetcher.swift in Sources */,
 				26F6BBDF26E5DBB8007C2B49 /* OperationListView.swift in Sources */,
+				26F6BC0026E60861007C2B49 /* OperationSender.swift in Sources */,
 				26E69DA326E5CB3900B9C7B3 /* Operation.swift in Sources */,
 				26F6BBDA26E5D671007C2B49 /* ApplianceListView.swift in Sources */,
 				26F6BBFC26E5F586007C2B49 /* OperationList.swift in Sources */,

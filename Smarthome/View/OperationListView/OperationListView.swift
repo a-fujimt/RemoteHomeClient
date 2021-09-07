@@ -11,19 +11,25 @@ struct OperationListView: View {
     
     var appliance: Appliance
 //    var operations: [Operation] = MockData().mockOperations
-    @ObservedObject var fetcher: DataFetcher
+    @ObservedObject var fetcher = OperationListFetcher()
     @State var isShowingAlert = false
+    @State var alertMessage = ""
+    @State var alertTitle = ""
     
     var body: some View {
         NavigationView {
             List(fetcher.operations) { operation in
                 Button (action: {
-                    isShowingAlert = true
+                    alertTitle = operation.name
+                    OperationSender().postOperation(appliance: appliance.id, operation: operation.id, completion: { result in
+                        isShowingAlert = true
+                        alertMessage = result
+                    })
                 }, label: {
                     OperationListViewCell(operation: operation)
-                }).alert(isPresented: $isShowingAlert, content: {
-                    Alert(title: Text("Alert"), message: Text(operation.name))
-                })
+                }).alert(isPresented: $isShowingAlert) {
+                    Alert(title: Text(alertTitle), message: Text(alertMessage))
+                }
             }
             .navigationTitle("Operation List")
         }
@@ -36,6 +42,6 @@ struct OperationListView: View {
 
 struct OperationListView_Previews: PreviewProvider {
     static var previews: some View {
-        OperationListView(appliance: MockData().mockAppliances[0], fetcher: DataFetcher())
+        OperationListView(appliance: MockData().mockAppliances[0])
     }
 }
