@@ -13,9 +13,6 @@ class OperationSender: ObservableObject {
     private let url: String
     private let passPhrase: String
     
-    @Published var status = ""
-    @Published var message = ""
-    
     init() {
         url = apiProperty.getString("URL") ?? "https://localhost"
         passPhrase = apiProperty.getString("passphrase") ?? ""
