@@ -11,6 +11,8 @@ struct ApplianceListView: View {
     
 //    let appliances: [Appliance] = MockData().mockAppliances
     @ObservedObject var applianceListViewModel = ApplianceListViewModel()
+    @State var isShowingAlert = false
+    @State var alert = Alert(title: Text(""))
     
     var body: some View {
         NavigationView {
@@ -21,8 +23,14 @@ struct ApplianceListView: View {
             }
             .navigationTitle("Appliance List")
         }
+        .alert(isPresented: $isShowingAlert, content: { alert })
         .onAppear() {
-            applianceListViewModel.fetch()
+            applianceListViewModel.fetch() { (result, message) in
+                if result == "Error" {
+                    isShowingAlert = true
+                    alert = Alert(title: Text(result), message: Text(message))
+                }
+            }
         }
     }
 }

@@ -18,7 +18,7 @@ class OperationListFetcher: ObservableObject {
         passPhrase = apiProperty.getString("passphrase") ?? ""
     }
     
-    func fetchOperationList(appliance: String, completion: @escaping ([Operation]) -> Void) {
+    func fetchOperationList(appliance: String, completion: @escaping (Result<[Operation], Error>) -> Void) {
         let urlString = url + "/api/v1/" + appliance
         URLSession.shared.dataTask(with: URL(string: urlString)!) { (data, response, error) in
             guard let data = data else { return }
@@ -26,15 +26,21 @@ class OperationListFetcher: ObservableObject {
             do {
                 let operationListData = try decoder.decode([Operation].self, from: data)
                 DispatchQueue.main.async {
-                    completion(operationListData)
+                    completion(.success(operationListData))
                 }
             } catch {
                 print("json convert failed in JSONDecoder. " + error.localizedDescription)
                 do {
                     let apiErrorData = try decoder.decode(ApiErrorModel.self, from: data)
                     print(apiErrorData.error.message)
+                    if let response = response as? HTTPURLResponse {
+                        completion(.failure(ApiError.server(response.statusCode, apiErrorData.error.message)))
+                        return
+                    }
+                    completion(.failure(ApiError.noResponse))
                 } catch {
                     print("json convert failed in JSONDecoder. " + error.localizedDescription)
+                    completion(.failure(ApiError.decoder(error)))
                 }
             }
         }.resume()

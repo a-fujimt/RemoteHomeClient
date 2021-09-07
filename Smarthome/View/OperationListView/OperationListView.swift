@@ -17,21 +17,26 @@ struct OperationListView: View {
     var body: some View {
         List(operationListViewModel.operations) { operation in
             Button (action: {
-                operationListViewModel.send(operation: operation.id) { (title, message) in
+                operationListViewModel.send(operation: operation.id) { (result, message) in
                     self.isShowingAlert = true
                     if message == "" {
-                        alert = Alert(title: Text(title))
+                        alert = Alert(title: Text(result))
                     } else {
-                        alert = Alert(title: Text(title), message: Text(message))
+                        alert = Alert(title: Text(result), message: Text(message))
                     }
                 }
             }, label: {
                 OperationListViewCell(operation: operation)
-            }).alert(isPresented: $isShowingAlert, content: { alert })
-        }
+            })
+        }.alert(isPresented: $isShowingAlert, content: { alert })
         .navigationTitle("Operation List")
         .onAppear() {
-            operationListViewModel.fetch()
+            operationListViewModel.fetch() { (result, message) in
+                if result == "Error" {
+                    isShowingAlert = true
+                    alert = Alert(title: Text(result), message: Text(message))
+                }
+            }
         }
     }
     

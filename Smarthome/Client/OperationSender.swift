@@ -46,7 +46,9 @@ class OperationSender: ObservableObject {
                 print(apiErrorData.error.message)
                 if let response = response as? HTTPURLResponse {
                     completion(.failure(ApiError.server(response.statusCode, errorMessage)))
+                    return
                 }
+                completion(.failure(ApiError.noResponse))
             } catch {
                 print("json convert failed in JSONDecoder. " + error.localizedDescription)
                 completion(.failure(ApiError.decoder(error)))
