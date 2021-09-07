@@ -16,22 +16,20 @@ struct OperationListView: View {
     @State var alertMessage = ""
     
     var body: some View {
-        NavigationView {
-            List(operationListViewModel.operations) { operation in
-                Button (action: {
-                    alertTitle = operation.name
-                    operationListViewModel.send(operation: operation.id) { result in
-                        self.isShowingAlert = true
-                        alertMessage = result
-                    }
-                }, label: {
-                    OperationListViewCell(operation: operation)
-                }).alert(isPresented: $isShowingAlert) {
-                    Alert(title: Text(alertTitle), message: Text(alertMessage))
+        List(operationListViewModel.operations) { operation in
+            Button (action: {
+                alertTitle = operation.name
+                operationListViewModel.send(operation: operation.id) { result in
+                    self.isShowingAlert = true
+                    alertMessage = result
                 }
+            }, label: {
+                OperationListViewCell(operation: operation)
+            }).alert(isPresented: $isShowingAlert) {
+                Alert(title: Text(alertTitle), message: Text(alertMessage))
             }
-            .navigationTitle("Operation List")
         }
+        .navigationTitle("Operation List")
         .onAppear() {
             operationListViewModel.fetch()
         }
