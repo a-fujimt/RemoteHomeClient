@@ -9,11 +9,11 @@ import Foundation
 
 class ApplianceListViewModel: ObservableObject {
     
-    let fetcher = ApplianceListFetcher()
+    let client = ApiClient()
     @Published var appliances: [Appliance] = []
     
     func fetch(completion: @escaping ((String, String)) -> Void) {
-        fetcher.fetchApplianceList() { result in
+        client.fetchApplianceList() { result in
             switch result {
             case let .success(appliances):
                 self.appliances = appliances

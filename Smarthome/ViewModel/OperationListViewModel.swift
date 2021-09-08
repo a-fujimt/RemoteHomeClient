@@ -9,7 +9,7 @@ import Foundation
 
 class OperationListViewModel: ObservableObject {
     
-    let fetcher = OperationListFetcher()
+    let client = ApiClient()
     let appliance: Appliance
     @Published var operations: [Operation] = []
     
@@ -18,7 +18,7 @@ class OperationListViewModel: ObservableObject {
     }
     
     func fetch(completion: @escaping ((String, String)) -> Void) {
-        fetcher.fetchOperationList(appliance: appliance.id) { result in
+        client.fetchOperationList(appliance: appliance.id) { result in
             switch result {
             case let .success(operations):
                 self.operations = operations
@@ -41,7 +41,7 @@ class OperationListViewModel: ObservableObject {
     }
     
     func send(operation: String, completion: @escaping ((String, String)) -> Void) {
-        OperationSender().postOperation(appliance: appliance.id, operation: operation, completion: { result in
+        client.postOperation(appliance: appliance.id, operation: operation, completion: { result in
             switch result {
             case .success(_):
                 completion(("Success!", ""))
