@@ -29,6 +29,9 @@
 		26F6BC0826E753E6007C2B49 /* OperationListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F6BC0726E753E6007C2B49 /* OperationListViewModel.swift */; };
 		26F6BC0A26E76438007C2B49 /* ApiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F6BC0926E76438007C2B49 /* ApiError.swift */; };
 		26F6BC0C26E8A2EC007C2B49 /* ApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F6BC0B26E8A2EC007C2B49 /* ApiClient.swift */; };
+		26F6BC0E26E9A82A007C2B49 /* SettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F6BC0D26E9A82A007C2B49 /* SettingsModel.swift */; };
+		26F6BC1326E9AAE4007C2B49 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F6BC1226E9AAE4007C2B49 /* SettingsView.swift */; };
+		26F6BC1526EA1EB4007C2B49 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F6BC1426EA1EB4007C2B49 /* SettingsViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +80,9 @@
 		26F6BC0726E753E6007C2B49 /* OperationListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationListViewModel.swift; sourceTree = "<group>"; };
 		26F6BC0926E76438007C2B49 /* ApiError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiError.swift; sourceTree = "<group>"; };
 		26F6BC0B26E8A2EC007C2B49 /* ApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiClient.swift; sourceTree = "<group>"; };
+		26F6BC0D26E9A82A007C2B49 /* SettingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModel.swift; sourceTree = "<group>"; };
+		26F6BC1226E9AAE4007C2B49 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		26F6BC1426EA1EB4007C2B49 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,6 +180,7 @@
 			children = (
 				26F6BBD826E5D5F4007C2B49 /* ApplianceListView */,
 				26F6BBDD26E5DB91007C2B49 /* OperationListView */,
+				26F6BC1126E9AAB9007C2B49 /* SettingsView */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -204,6 +211,7 @@
 				26E69DA026E5CAFD00B9C7B3 /* Appliance.swift */,
 				26E69DA226E5CB3900B9C7B3 /* Operation.swift */,
 				26F6BBFB26E5F586007C2B49 /* OperationList.swift */,
+				26F6BC0D26E9A82A007C2B49 /* SettingsModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -230,8 +238,17 @@
 			children = (
 				26F6BC0526E7507B007C2B49 /* ApplianceListViewModel.swift */,
 				26F6BC0726E753E6007C2B49 /* OperationListViewModel.swift */,
+				26F6BC1426EA1EB4007C2B49 /* SettingsViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		26F6BC1126E9AAB9007C2B49 /* SettingsView */ = {
+			isa = PBXGroup;
+			children = (
+				26F6BC1226E9AAE4007C2B49 /* SettingsView.swift */,
+			);
+			path = SettingsView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -368,6 +385,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				26F6BC0E26E9A82A007C2B49 /* SettingsModel.swift in Sources */,
 				26F6BC0326E74894007C2B49 /* ApiErrorModel.swift in Sources */,
 				26E69D7526E5C56A00B9C7B3 /* ContentView.swift in Sources */,
 				26E69DA526E5CEBC00B9C7B3 /* MockData.swift in Sources */,
@@ -382,9 +400,11 @@
 				26E69DA326E5CB3900B9C7B3 /* Operation.swift in Sources */,
 				26F6BBDA26E5D671007C2B49 /* ApplianceListView.swift in Sources */,
 				26F6BBFC26E5F586007C2B49 /* OperationList.swift in Sources */,
+				26F6BC1526EA1EB4007C2B49 /* SettingsViewModel.swift in Sources */,
 				26E69DA126E5CAFD00B9C7B3 /* Appliance.swift in Sources */,
 				26F6BBFA26E5F0F0007C2B49 /* ApiProperty.swift in Sources */,
 				26F6BC0C26E8A2EC007C2B49 /* ApiClient.swift in Sources */,
+				26F6BC1326E9AAE4007C2B49 /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -21,18 +21,31 @@ struct ApplianceListView: View {
                     ApplianceListViewCell(appliance: appliance)
                 }
             }
+            .toolbar {
+                ToolbarItem(placement: .navigation) {
+                    NavigationLink(
+                        destination: SettingsView()
+                                    .onDisappear() { appear() },
+                        label: { Text("Settings") })
+                }
+            }
             .navigationTitle("Appliance List")
         }
         .alert(isPresented: $isShowingAlert, content: { alert })
         .onAppear() {
-            applianceListViewModel.fetch() { (result, message) in
-                if result == "Error" {
-                    isShowingAlert = true
-                    alert = Alert(title: Text(result), message: Text(message))
-                }
+            appear()
+        }
+    }
+    
+    private func appear() {
+        applianceListViewModel.fetch() { (result, message) in
+            if result == "Error" {
+                isShowingAlert = true
+                alert = Alert(title: Text(result), message: Text(message))
             }
         }
     }
+    
 }
 
 struct ApplianceListView_Previews: PreviewProvider {
