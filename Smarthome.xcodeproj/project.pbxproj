@@ -21,8 +21,6 @@
 		26F6BBDC26E5D8C4007C2B49 /* ApplianceListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F6BBDB26E5D8C4007C2B49 /* ApplianceListViewCell.swift */; };
 		26F6BBDF26E5DBB8007C2B49 /* OperationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F6BBDE26E5DBB8007C2B49 /* OperationListView.swift */; };
 		26F6BBE126E5DBF8007C2B49 /* OperationListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F6BBE026E5DBF8007C2B49 /* OperationListViewCell.swift */; };
-		26F6BBF826E5EFCD007C2B49 /* API.plist in Resources */ = {isa = PBXBuildFile; fileRef = 26F6BBF726E5EFCD007C2B49 /* API.plist */; };
-		26F6BBFA26E5F0F0007C2B49 /* ApiProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F6BBF926E5F0F0007C2B49 /* ApiProperty.swift */; };
 		26F6BBFC26E5F586007C2B49 /* OperationList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F6BBFB26E5F586007C2B49 /* OperationList.swift */; };
 		26F6BC0326E74894007C2B49 /* ApiErrorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F6BC0226E74894007C2B49 /* ApiErrorModel.swift */; };
 		26F6BC0626E7507B007C2B49 /* ApplianceListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F6BC0526E7507B007C2B49 /* ApplianceListViewModel.swift */; };
@@ -72,8 +70,6 @@
 		26F6BBDB26E5D8C4007C2B49 /* ApplianceListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplianceListViewCell.swift; sourceTree = "<group>"; };
 		26F6BBDE26E5DBB8007C2B49 /* OperationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationListView.swift; sourceTree = "<group>"; };
 		26F6BBE026E5DBF8007C2B49 /* OperationListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationListViewCell.swift; sourceTree = "<group>"; };
-		26F6BBF726E5EFCD007C2B49 /* API.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = API.plist; sourceTree = "<group>"; };
-		26F6BBF926E5F0F0007C2B49 /* ApiProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiProperty.swift; sourceTree = "<group>"; };
 		26F6BBFB26E5F586007C2B49 /* OperationList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationList.swift; sourceTree = "<group>"; };
 		26F6BC0226E74894007C2B49 /* ApiErrorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiErrorModel.swift; sourceTree = "<group>"; };
 		26F6BC0526E7507B007C2B49 /* ApplianceListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplianceListViewModel.swift; sourceTree = "<group>"; };
@@ -141,8 +137,6 @@
 				26F6BC0426E7504F007C2B49 /* ViewModel */,
 				26E69D7826E5C56B00B9C7B3 /* Preview Content */,
 				26F6BC0126E74751007C2B49 /* Client */,
-				26F6BBF926E5F0F0007C2B49 /* ApiProperty.swift */,
-				26F6BBF726E5EFCD007C2B49 /* API.plist */,
 				26E69D7626E5C56B00B9C7B3 /* Assets.xcassets */,
 				26E69D7B26E5C56B00B9C7B3 /* Info.plist */,
 			);
@@ -359,7 +353,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				26E69D7A26E5C56B00B9C7B3 /* Preview Assets.xcassets in Resources */,
-				26F6BBF826E5EFCD007C2B49 /* API.plist in Resources */,
 				26E69D7726E5C56B00B9C7B3 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -402,7 +395,6 @@
 				26F6BBFC26E5F586007C2B49 /* OperationList.swift in Sources */,
 				26F6BC1526EA1EB4007C2B49 /* SettingsViewModel.swift in Sources */,
 				26E69DA126E5CAFD00B9C7B3 /* Appliance.swift in Sources */,
-				26F6BBFA26E5F0F0007C2B49 /* ApiProperty.swift in Sources */,
 				26F6BC0C26E8A2EC007C2B49 /* ApiClient.swift in Sources */,
 				26F6BC1326E9AAE4007C2B49 /* SettingsView.swift in Sources */,
 			);
