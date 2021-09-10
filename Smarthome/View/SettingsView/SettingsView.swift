@@ -18,6 +18,8 @@ struct SettingsView: View {
                 TextField("URL", text: $settingsViewModel.url)
                     .font(.callout)
                     .multilineTextAlignment(.trailing)
+                    .keyboardType(.URL)
+                    .autocapitalization(.none)
             }
             HStack{
                 Text("Pass Phrase")

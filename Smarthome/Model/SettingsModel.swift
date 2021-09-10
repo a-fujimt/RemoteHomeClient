@@ -8,30 +8,28 @@
 import Foundation
 
 protocol SettingsModelProtocol {
-    func fetchURL() -> String
-    func fetchPassPhrase() -> String
+    func fetchURL() -> String?
+    func fetchPassPhrase() -> String?
     func updateURL(url: String)
     func updatePassPhrase(passPhrase: String)
 }
 
 class SettingsModel: SettingsModelProtocol {
     
-    var apiProperty = ApiProperty.shared
-    
-    func fetchURL() -> String {
-        return apiProperty.getString("URL") ?? ""
+    func fetchURL() -> String? {
+        return UserDefaults.standard.string(forKey: "URL")
     }
     
-    func fetchPassPhrase() -> String {
-        return apiProperty.getString("passphrase") ?? ""
+    func fetchPassPhrase() -> String? {
+        return UserDefaults.standard.string(forKey: "PassPhrase")
     }
     
     func updateURL(url: String) {
-        print(url)
+        UserDefaults.standard.set(url, forKey: "URL")
     }
     
     func updatePassPhrase(passPhrase: String) {
-        print(passPhrase)
+        UserDefaults.standard.set(passPhrase, forKey: "PassPhrase")
     }
     
 }

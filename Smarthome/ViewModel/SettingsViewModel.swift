@@ -15,8 +15,8 @@ class SettingsViewModel: ObservableObject {
     
     init() {
         model = SettingsModel()
-        url = model.fetchURL()
-        passPhrase = model.fetchPassPhrase()
+        url = model.fetchURL() ?? ""
+        passPhrase = model.fetchPassPhrase() ?? ""
     }
     
     func save() {

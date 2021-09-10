@@ -24,18 +24,16 @@ class OperationListViewModel: ObservableObject {
                 self.operations = operations
                 completion(("Success!", ""))
             case let .failure(error):
-                switch error {
-                case let ApiError.server(status, message):
-                    completion(("Error", message + "(" + String(status) + ")"))
-                case ApiError.decoder(_):
-                    completion(("Error", "decode error"))
-                case ApiError.noResponse:
-                    completion(("Error", "No response"))
-                case ApiError.unknown(_):
-                    completion(("Error", "Unknown error"))
-                default:
-                    completion(("Error", "Error"))
+                DispatchQueue.main.async {
+                    self.operations = []
                 }
+                let message: String
+                if let apiError = error as? ApiError {
+                    message = apiError.getErrorDetail()
+                } else {
+                    message = "Error"
+                }
+                completion(("Error", message))
             }
         }
     }
@@ -46,18 +44,13 @@ class OperationListViewModel: ObservableObject {
             case .success(_):
                 completion(("Success!", ""))
             case let .failure(error):
-                switch error {
-                case let ApiError.server(status, message):
-                    completion(("Error", message + "(" + String(status) + ")"))
-                case ApiError.decoder(_):
-                    completion(("Error", "decode error"))
-                case ApiError.noResponse:
-                    completion(("Error", "No response"))
-                case ApiError.unknown(_):
-                    completion(("Error", "Unknown error"))
-                default:
-                    completion(("Error", "Error"))
+                let message: String
+                if let apiError = error as? ApiError {
+                    message = apiError.getErrorDetail()
+                } else {
+                    message = "Error"
                 }
+                completion(("Error", message))
             }
         })
     }
