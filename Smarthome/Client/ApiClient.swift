@@ -19,6 +19,7 @@ class ApiClient: ApiClientProtocol {
     
     func fetchApplianceList(completion: @escaping (Result<[Appliance], Error>) -> Void) {
         guard let host = settingsModel.fetchURL() else { return }
+        if host == "" { return }
         let urlString = host + "/api/v1/list"
         guard let url = URL(string: urlString) else {
             completion(.failure(ApiError.wrongUrl))
@@ -45,6 +46,7 @@ class ApiClient: ApiClientProtocol {
     
     func fetchOperationList(appliance: String, completion: @escaping (Result<[Operation], Error>) -> Void) {
         guard let host = settingsModel.fetchURL() else { return }
+        if host == "" { return }
         let urlString = host + "/api/v1/" + appliance
         guard let url = URL(string: urlString) else {
             completion(.failure(ApiError.wrongUrl))
@@ -71,6 +73,7 @@ class ApiClient: ApiClientProtocol {
     
     func postOperation(appliance: String, operation: String, completion: @escaping (Result<String, Error>) -> Void) {
         guard let host = settingsModel.fetchURL() else { return }
+        if host == "" { return }
         let urlString = host + "/api/v1/" + appliance + "/" + operation
         guard let url = URL(string: urlString) else {
             completion(.failure(ApiError.wrongUrl))
