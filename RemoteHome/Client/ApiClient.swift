@@ -120,6 +120,10 @@ class ApiClient: ApiClientProtocol {
     }
     
     private func handleError<T>(data: Data, response: URLResponse?, completion: @escaping (Result<T, Error>) -> Void) {
+        if let response = response as? HTTPURLResponse {
+            completion(.failure(ApiError.server(response.statusCode, "")))
+            return
+        }
         let decoder: JSONDecoder = JSONDecoder()
         do {
             let apiErrorData = try decoder.decode(ApiErrorModel.self, from: data)
