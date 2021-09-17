@@ -12,37 +12,45 @@ class OperationListViewModel: ObservableObject {
     let client = ApiClient()
     let appliance: Appliance
     @Published var operations: [Operation] = []
+    @Published var isShowingAlert = false
+    @Published var alertTitle = ""
+    @Published var alertMessage = ""
     
     init(appliance: Appliance) {
         self.appliance = appliance
     }
     
-    func fetch(completion: @escaping ((String, String)) -> Void) {
+    func fetch() {
         client.fetchOperationList(appliance: appliance.id) { result in
             switch result {
             case let .success(operations):
                 self.operations = operations
-                completion(("Success!", ""))
             case let .failure(error):
-                DispatchQueue.main.async {
-                    self.operations = []
-                }
                 let message: String
                 if let apiError = error as? ApiError {
                     message = apiError.getErrorDetail()
                 } else {
                     message = "Error"
                 }
-                completion(("Error", message))
+                DispatchQueue.main.async {
+                    self.operations = []
+                    self.isShowingAlert = true
+                    self.alertTitle = "Error"
+                    self.alertMessage = message
+                }
             }
         }
     }
     
-    func send(operation: String, completion: @escaping ((String, String)) -> Void) {
-        client.postOperation(appliance: appliance.id, operation: operation, completion: { result in
+    func send(operation: String) {
+        client.postOperation(appliance: appliance.id, operation: operation) { result in
             switch result {
             case .success(_):
-                completion(("Success!", ""))
+                DispatchQueue.main.async {
+                    self.isShowingAlert = true
+                    self.alertTitle = "Success!"
+                    self.alertMessage = ""
+                }
             case let .failure(error):
                 let message: String
                 if let apiError = error as? ApiError {
@@ -50,8 +58,13 @@ class OperationListViewModel: ObservableObject {
                 } else {
                     message = "Error"
                 }
-                completion(("Error", message))
+                DispatchQueue.main.async {
+                    self.isShowingAlert = true
+                    self.alertTitle = "Error"
+                    self.alertMessage = message
+                }
             }
-        })
+        }
     }
+    
 }

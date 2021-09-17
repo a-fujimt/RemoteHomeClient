@@ -31,19 +31,14 @@ struct ApplianceListView: View {
             }
             .navigationTitle("Appliance List")
         }
-        .alert(isPresented: $isShowingAlert, content: { alert })
+        .alert(isPresented: $applianceListViewModel.isShowingAlert, content: { Alert(title: Text(applianceListViewModel.alertTitle), message: Text(applianceListViewModel.alertMessage)) })
         .onAppear() {
             appear()
         }
     }
     
     private func appear() {
-        applianceListViewModel.fetch() { (result, message) in
-            if result == "Error" {
-                isShowingAlert = true
-                alert = Alert(title: Text(result), message: Text(message))
-            }
-        }
+        applianceListViewModel.fetch()
     }
     
 }

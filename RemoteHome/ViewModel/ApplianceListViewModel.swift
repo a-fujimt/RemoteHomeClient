@@ -11,26 +11,29 @@ class ApplianceListViewModel: ObservableObject {
     
     let client = ApiClient()
     @Published var appliances: [Appliance] = []
+    @Published var isShowingAlert = false
+    @Published var alertTitle = ""
+    @Published var alertMessage = ""
     
-    func fetch(completion: @escaping ((String, String)) -> Void) {
+    func fetch() {
         client.fetchApplianceList() { result in
             switch result {
             case let .success(appliances):
                 self.appliances = appliances
-                completion(("Success!", ""))
             case let .failure(error):
-                DispatchQueue.main.async {
-                    self.appliances = []
-                }
                 let message: String
                 if let apiError = error as? ApiError {
                     message = apiError.getErrorDetail()
                 } else {
                     message = "Error"
                 }
-                completion(("Error", message))
+                DispatchQueue.main.async {
+                    self.appliances = []
+                    self.isShowingAlert = true
+                    self.alertTitle = "Error"
+                    self.alertMessage = message
+                }
             }
-            
         }
     }
     
