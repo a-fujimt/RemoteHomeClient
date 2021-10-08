@@ -9,10 +9,7 @@ import SwiftUI
 
 struct OperationListView: View {
     
-//    var operations: [Operation] = MockData().mockOperations
     @ObservedObject var operationListViewModel: OperationListViewModel
-    @State var isShowingAlert = false
-    @State var alert = Alert(title: Text(""))
     
     var body: some View {
         List(operationListViewModel.operations) { operation in

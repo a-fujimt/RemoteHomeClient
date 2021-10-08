@@ -9,10 +9,7 @@ import SwiftUI
 
 struct ApplianceListView: View {
     
-//    let appliances: [Appliance] = MockData().mockAppliances
-    @ObservedObject var applianceListViewModel = ApplianceListViewModel()
-    @State var isShowingAlert = false
-    @State var alert = Alert(title: Text(""))
+    @StateObject var applianceListViewModel = ApplianceListViewModel()
     
     var body: some View {
         NavigationView {
