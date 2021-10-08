@@ -13,6 +13,7 @@ struct OperationListViewCell: View {
     
     var body: some View {
         Text(operation.name)
+            .foregroundColor(.primary)
     }
 }
 
