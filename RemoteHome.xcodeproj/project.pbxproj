@@ -79,6 +79,7 @@
 		26F6BC0D26E9A82A007C2B49 /* SettingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModel.swift; sourceTree = "<group>"; };
 		26F6BC1226E9AAE4007C2B49 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		26F6BC1426EA1EB4007C2B49 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		26FFCB2D26FDE6C300B5F3CE /* RemoteHome.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RemoteHome.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +131,7 @@
 		26E69D7126E5C56A00B9C7B3 /* RemoteHome */ = {
 			isa = PBXGroup;
 			children = (
+				26FFCB2D26FDE6C300B5F3CE /* RemoteHome.entitlements */,
 				26E69D7226E5C56A00B9C7B3 /* RemoteHomeApp.swift */,
 				26E69D7426E5C56A00B9C7B3 /* ContentView.swift */,
 				26F6BBE226E5DD91007C2B49 /* Model */,
@@ -553,6 +555,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = RemoteHome/RemoteHome.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"RemoteHome/Preview Content\"";
 				DEVELOPMENT_TEAM = 9JL8ZZ7D3X;
@@ -565,8 +568,10 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = fujimotoakira.RemoteHome;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,6";
 			};
 			name = Debug;
 		};
@@ -575,6 +580,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = RemoteHome/RemoteHome.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"RemoteHome/Preview Content\"";
 				DEVELOPMENT_TEAM = 9JL8ZZ7D3X;
@@ -587,8 +593,10 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = fujimotoakira.RemoteHome;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,6";
 			};
 			name = Release;
 		};
