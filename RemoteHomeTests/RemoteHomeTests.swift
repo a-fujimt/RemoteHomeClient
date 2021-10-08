@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import Smarthome
+@testable import RemoteHome
 
 class RemoteHomeTests: XCTestCase {
 
