@@ -31,6 +31,12 @@ class ApiClient: ApiClientProtocol {
                 return
             }
             guard let data = data else { return }
+            guard let response = response as? HTTPURLResponse else { return }
+            if response.statusCode != 200 {
+                handleError(data: data, response: response, completion: completion)
+                return
+            }
+            
             let decoder: JSONDecoder = JSONDecoder()
             do {
                 let applianceListData = try decoder.decode([Appliance].self, from: data)
@@ -39,7 +45,7 @@ class ApiClient: ApiClientProtocol {
                 }
             } catch {
                 print("json convert failed in JSONDecoder. " + error.localizedDescription)
-                handleError(data: data, response: response, completion: completion)
+                completion(.failure(ApiError.decoder(error)))
             }
         }.resume()
     }
@@ -58,6 +64,12 @@ class ApiClient: ApiClientProtocol {
                 return
             }
             guard let data = data else { return }
+            guard let response = response as? HTTPURLResponse else { return }
+            if response.statusCode != 200 {
+                handleError(data: data, response: response, completion: completion)
+                return
+            }
+            
             let decoder: JSONDecoder = JSONDecoder()
             do {
                 let operationListData = try decoder.decode([Operation].self, from: data)
@@ -66,7 +78,7 @@ class ApiClient: ApiClientProtocol {
                 }
             } catch {
                 print("json convert failed in JSONDecoder. " + error.localizedDescription)
-                handleError(data: data, response: response, completion: completion)
+                completion(.failure(ApiError.decoder(error)))
             }
         }.resume()
     }
@@ -90,6 +102,8 @@ class ApiClient: ApiClientProtocol {
             request.addValue("application/json", forHTTPHeaderField: "Accept")
         } catch {
             print("json convert failed in JSONSerialization. " + error.localizedDescription)
+            completion(.failure(ApiError.decoder(error)))
+            return
         }
         
         URLSession.shared.dataTask(with: request) { [self] (data, response, error) in
@@ -98,12 +112,17 @@ class ApiClient: ApiClientProtocol {
                 return
             }
             guard let data = data else { return }
+            guard let response = response as? HTTPURLResponse else { return }
+            if response.statusCode != 200 {
+                handleError(data: data, response: response, completion: completion)
+                return
+            }
+            
             let value = String(data: data, encoding: .utf8)!
             if value == "OK" {
                 completion(.success(value))
                 return
             }
-            handleError(data: data, response: response, completion: completion)
         }.resume()
     }
     
@@ -119,24 +138,16 @@ class ApiClient: ApiClientProtocol {
         }
     }
     
-    private func handleError<T>(data: Data, response: URLResponse?, completion: @escaping (Result<T, Error>) -> Void) {
-        if let response = response as? HTTPURLResponse {
-            completion(.failure(ApiError.server(response.statusCode, "")))
-            return
-        }
+    private func handleError<T>(data: Data, response: HTTPURLResponse, completion: @escaping (Result<T, Error>) -> Void) {
         let decoder: JSONDecoder = JSONDecoder()
         do {
             let apiErrorData = try decoder.decode(ApiErrorModel.self, from: data)
             let errorMessage = apiErrorData.error.message
             print(apiErrorData.error.message)
-            if let response = response as? HTTPURLResponse {
-                completion(.failure(ApiError.server(response.statusCode, errorMessage)))
-                return
-            }
-            completion(.failure(ApiError.noResponse))
+            completion(.failure(ApiError.server(response.statusCode, errorMessage)))
         } catch {
             print("json convert failed in JSONDecoder. " + error.localizedDescription)
-            completion(.failure(ApiError.decoder(error)))
+            completion(.failure(ApiError.server(response.statusCode, "")))
         }
     }
     
