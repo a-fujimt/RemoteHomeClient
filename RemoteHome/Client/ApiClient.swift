@@ -155,7 +155,7 @@ class ApiClient: ApiClientProtocol {
 
 protocol ConcurrncyApiClientProtocol {
     func fetchApplianceList() async -> Result<[Appliance], Error>
-    func fetchOperationsList(appliance: String) async -> Result<[Operation], Error>
+    func fetchOperationList(appliance: String) async -> Result<[Operation], Error>
     func postOperation(appliance: String, operation: String) async -> Result<String, Error>
 }
 
@@ -191,7 +191,7 @@ class ConcurrncyApiClient: ConcurrncyApiClientProtocol {
         }
     }
     
-    func fetchOperationsList(appliance: String) async -> Result<[Operation], Error> {
+    func fetchOperationList(appliance: String) async -> Result<[Operation], Error> {
         guard let host = settingsModel.fetchURL() else { return .failure(ApiError.wrongUrl) }
         if host == "" { return .failure(ApiError.wrongUrl) }
         let urlString = host + "/api/v1/" + appliance

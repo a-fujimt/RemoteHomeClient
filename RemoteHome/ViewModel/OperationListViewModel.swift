@@ -22,7 +22,7 @@ class OperationListViewModel: ObservableObject {
     
     @MainActor
     func fetch() async {
-        let result = await client.fetchOperationsList(appliance: appliance.id)
+        let result = await client.fetchOperationList(appliance: appliance.id)
         switch result {
         case let .success(operations):
             self.operations = operations
