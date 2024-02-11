@@ -22,20 +22,20 @@ struct ApplianceListView: View {
                 ToolbarItem(placement: .navigation) {
                     NavigationLink(
                         destination: SettingsView()
-                                    .onDisappear() { appear() },
+                            .onDisappear() {
+                                Task {
+                                    await applianceListViewModel.fetch()
+                                }
+                            },
                         label: { Text("Settings") })
                 }
             }
             .navigationTitle("Appliance List")
         }
         .alert(isPresented: $applianceListViewModel.isShowingAlert, content: { Alert(title: Text(applianceListViewModel.alertTitle), message: Text(applianceListViewModel.alertMessage)) })
-        .onAppear() {
-            appear()
+        .task {
+            await applianceListViewModel.fetch()
         }
-    }
-    
-    private func appear() {
-        applianceListViewModel.fetch()
     }
     
 }

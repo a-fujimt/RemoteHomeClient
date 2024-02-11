@@ -9,7 +9,7 @@ import Foundation
 
 class OperationListViewModel: ObservableObject {
     
-    let client = ApiClient()
+    let client = ConcurrncyApiClient()
     let appliance: Appliance
     @Published var operations: [Operation] = []
     @Published var isShowingAlert = false
@@ -20,49 +20,43 @@ class OperationListViewModel: ObservableObject {
         self.appliance = appliance
     }
     
-    func fetch() {
-        client.fetchOperationList(appliance: appliance.id) { result in
-            switch result {
-            case let .success(operations):
-                self.operations = operations
-            case let .failure(error):
-                let message: String
-                if let apiError = error as? ApiError {
-                    message = apiError.getErrorDetail()
-                } else {
-                    message = "Error"
-                }
-                DispatchQueue.main.async {
-                    self.operations = []
-                    self.isShowingAlert = true
-                    self.alertTitle = "Error"
-                    self.alertMessage = message
-                }
+    @MainActor
+    func fetch() async {
+        let result = await client.fetchOperationsList(appliance: appliance.id)
+        switch result {
+        case let .success(operations):
+            self.operations = operations
+        case let .failure(error):
+            let message: String
+            if let apiError = error as? ApiError {
+                message = apiError.getErrorDetail()
+            } else {
+                message = "Error"
             }
+            self.operations = []
+            self.isShowingAlert = true
+            self.alertTitle = "Error"
+            self.alertMessage = message
         }
     }
     
-    func send(operation: String) {
-        client.postOperation(appliance: appliance.id, operation: operation) { result in
-            switch result {
-            case .success(_):
-                DispatchQueue.main.async {
-                    self.isShowingAlert = true
-                    self.alertTitle = "Success!"
-                    self.alertMessage = ""
-                }
-            case let .failure(error):
-                let message: String
-                if let apiError = error as? ApiError {
-                    message = apiError.getErrorDetail()
-                } else {
-                    message = "Error"
-                }
-                DispatchQueue.main.async {
-                    self.isShowingAlert = true
-                    self.alertTitle = "Error"
-                    self.alertMessage = message
-                }
+    @MainActor
+    func send(operation: String) async {
+        let result = await client.postOperation(appliance: appliance.id, operation: operation)
+        switch result {
+        case .success(_):
+            self.isShowingAlert = true
+            self.alertTitle = "Success!"
+            self.alertMessage = ""
+        case let .failure(error):
+            let message: String
+            if let apiError = error as? ApiError {
+                message = apiError.getErrorDetail()
+            } else {
+                message = "Error"
+                self.isShowingAlert = true
+                self.alertTitle = "Error"
+                self.alertMessage = message
             }
         }
     }
