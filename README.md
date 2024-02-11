@@ -8,7 +8,7 @@
 
 ## 動作要件
 
-- iOS 14+ / macOS 11+
+- iOS 15+ / macOS 11+
 
 ## Setup
 
