@@ -164,12 +164,7 @@ class ConcurrncyApiClient: ConcurrncyApiClientProtocol {
     var settingsModel = SettingsModel()
     
     func fetchApplianceList() async -> Result<[Appliance], Error> {
-        guard let host = settingsModel.fetchURL() else { return .failure(ApiError.wrongUrl) }
-        if host == "" { return .failure(ApiError.wrongUrl) }
-        let urlString = host + "/api/v1/list"
-        guard let url = URL(string: urlString) else {
-            return .failure(ApiError.wrongUrl)
-        }
+        guard let url = createURL(path: "/api/v1/list") else { return .failure(ApiError.wrongUrl) }
         
         do {
             let (data, response) = try await URLSession.shared.data(from: url)
@@ -192,10 +187,7 @@ class ConcurrncyApiClient: ConcurrncyApiClientProtocol {
     }
     
     func fetchOperationList(appliance: String) async -> Result<[Operation], Error> {
-        guard let host = settingsModel.fetchURL() else { return .failure(ApiError.wrongUrl) }
-        if host == "" { return .failure(ApiError.wrongUrl) }
-        let urlString = host + "/api/v1/" + appliance
-        guard let url = URL(string: urlString) else { return .failure(ApiError.wrongUrl) }
+        guard let url = createURL(path: "/api/v1/" + appliance) else { return .failure(ApiError.wrongUrl) }
         
         do {
             let (data, response) = try await URLSession.shared.data(from: url)
@@ -218,10 +210,7 @@ class ConcurrncyApiClient: ConcurrncyApiClientProtocol {
     }
     
     func postOperation(appliance: String, operation: String) async -> Result<String, Error> {
-        guard let host = settingsModel.fetchURL() else { return .failure(ApiError.wrongUrl) }
-        if host == "" { return .failure(ApiError.wrongUrl) }
-        let urlString = host + "/api/v1/" + appliance + "/" + operation
-        guard let url = URL(string: urlString) else { return .failure(ApiError.wrongUrl) }
+        guard let url = createURL(path: "/api/v1/" + appliance + "/" + operation) else { return .failure(ApiError.wrongUrl) }
         
         var request = URLRequest(url: url)
         let passPhrase = settingsModel.fetchPassPhrase()
@@ -251,6 +240,13 @@ class ConcurrncyApiClient: ConcurrncyApiClientProtocol {
         } catch {
             return handleConnectionError(error: error)
         }
+    }
+    
+    private func createURL(path: String) -> URL? {
+        guard let host = settingsModel.fetchURL() else { return nil }
+        if host == "" { return nil }
+        guard let url = URL(string: host) else { return nil }
+        return url.appendingPathComponent(path)
     }
     
     private func handleConnectionError<T>(error: Error) -> (Result<T, Error>){
