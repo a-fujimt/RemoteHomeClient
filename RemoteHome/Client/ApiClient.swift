@@ -152,3 +152,130 @@ class ApiClient: ApiClientProtocol {
     }
     
 }
+
+protocol ConcurrncyApiClientProtocol {
+    func fetchApplianceList() async -> Result<[Appliance], Error>
+    func fetchOperationsList(appliance: String) async -> Result<[Operation], Error>
+    func postOperation(appliance: String, operation: String) async -> Result<String, Error>
+}
+
+class ConcurrncyApiClient: ConcurrncyApiClientProtocol {
+    
+    var settingsModel = SettingsModel()
+    
+    func fetchApplianceList() async -> Result<[Appliance], Error> {
+        guard let host = settingsModel.fetchURL() else { return .failure(ApiError.wrongUrl) }
+        if host == "" { return .failure(ApiError.wrongUrl) }
+        let urlString = host + "/api/v1/list"
+        guard let url = URL(string: urlString) else {
+            return .failure(ApiError.wrongUrl)
+        }
+        
+        do {
+            let (data, response) = try await URLSession.shared.data(from: url)
+            guard let response = response as? HTTPURLResponse else { throw ApiError.noResponse }
+            if response.statusCode != 200 {
+                return handleServerError(data: data, response: response)
+            }
+            
+            let decoder: JSONDecoder = JSONDecoder()
+            do {
+                let applianceListData = try decoder.decode([Appliance].self, from: data)
+                return .success(applianceListData)
+            } catch {
+                print("json convert failed in JSONDecoder. " + error.localizedDescription)
+                return .failure(ApiError.decoder(error))
+            }
+        } catch {
+            return handleConnectionError(error: error)
+        }
+    }
+    
+    func fetchOperationsList(appliance: String) async -> Result<[Operation], Error> {
+        guard let host = settingsModel.fetchURL() else { return .failure(ApiError.wrongUrl) }
+        if host == "" { return .failure(ApiError.wrongUrl) }
+        let urlString = host + "/api/v1/" + appliance
+        guard let url = URL(string: urlString) else { return .failure(ApiError.wrongUrl) }
+        
+        do {
+            let (data, response) = try await URLSession.shared.data(from: url)
+            guard let response = response as? HTTPURLResponse else { throw ApiError.noResponse }
+            if response.statusCode != 200 {
+                return handleServerError(data: data, response: response)
+            }
+            
+            let decoder: JSONDecoder = JSONDecoder()
+            do {
+                let operationListData = try decoder.decode([Operation].self, from: data)
+                return .success(operationListData)
+            } catch {
+                print("json convert failed in JSONDecoder. " + error.localizedDescription)
+                return .failure(ApiError.decoder(error))
+            }
+        } catch {
+            return handleConnectionError(error: error)
+        }
+    }
+    
+    func postOperation(appliance: String, operation: String) async -> Result<String, Error> {
+        guard let host = settingsModel.fetchURL() else { return .failure(ApiError.wrongUrl) }
+        if host == "" { return .failure(ApiError.wrongUrl) }
+        let urlString = host + "/api/v1/" + appliance + "/" + operation
+        guard let url = URL(string: urlString) else { return .failure(ApiError.wrongUrl) }
+        
+        var request = URLRequest(url: url)
+        let passPhrase = settingsModel.fetchPassPhrase()
+        let jsonBody = ["passphrase" : passPhrase]
+        do {
+            let data = try JSONSerialization.data(withJSONObject: jsonBody, options: [])
+            request.httpMethod = "POST"      // Send POST request
+            request.httpBody = data
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.addValue("application/json", forHTTPHeaderField: "Accept")
+        } catch {
+            print("json convert failed in JSONSerialization. " + error.localizedDescription)
+            return .failure(ApiError.decoder(error))
+        }
+        
+        do {
+            let (data, response) = try await URLSession.shared.data(for: request)
+            guard let response = response as? HTTPURLResponse else { return .failure(ApiError.noResponse) }
+            if response.statusCode != 200 {
+                return handleServerError(data: data, response: response)
+            }
+            let value = String(data: data, encoding: .utf8)!
+            if value == "OK" {
+                return .success(value)
+            }
+            return .failure(ApiError.badResponse)
+        } catch {
+            return handleConnectionError(error: error)
+        }
+    }
+    
+    private func handleConnectionError<T>(error: Error) -> (Result<T, Error>){
+        let nsError = error as NSError
+        switch nsError.code {
+        case NSURLErrorCannotFindHost:
+            return .failure(ApiError.wrongUrl)
+        case NSURLErrorTimedOut:
+            return .failure(ApiError.timeOut)
+        default:
+            return .failure(ApiError.unknown(error))
+        }
+    }
+    
+    private func handleServerError<T>(data: Data, response: HTTPURLResponse) -> (Result<T, Error>) {
+        let decoder: JSONDecoder = JSONDecoder()
+        do {
+            let apiErrorData = try decoder.decode(ApiErrorModel.self, from: data)
+            let errorMessage = apiErrorData.error.message
+            print(apiErrorData.error.message)
+            return .failure(ApiError.server(response.statusCode, errorMessage))
+        } catch {
+            print("json convert failed in JSONDecoder. " + error.localizedDescription)
+            return .failure(ApiError.server(response.statusCode, ""))
+        }
+    }
+    
+}

@@ -13,6 +13,7 @@ enum ApiError: Error {
     case noResponse
     case timeOut
     case wrongUrl
+    case badResponse
     case unknown(Error)
 }
 
@@ -30,6 +31,8 @@ extension ApiError {
             return "Time out"
         case .wrongUrl:
             return "Wrong URL"
+        case .badResponse:
+            return "Bad response"
         case .unknown(_):
             return "Unknown error"
         }
